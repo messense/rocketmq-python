@@ -1,16 +1,16 @@
 sudo: required
 language: python
-python:
-  - "3.6"
 
 matrix:
   include:
     - dist: trusty
+      python: 3.6
       services:
         - docker
       script:
         - while sleep 5m; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
         - docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 /io/manylinux.sh >> build.log 2>&1
+        - ls dist/
         - kill %1
     - os: osx
       osx_image: xcode9.4
@@ -21,7 +21,15 @@ matrix:
         - cd /tmp/rocketmq-client-cpp && bash build.sh >> build.log 2>&1 && cd -
         - cp /tmp/rocketmq-client-cpp/bin/librocketmq.dylib rocketmq/
         - python3.6 setup.py bdist_wheel
+        - ls dist/
         - kill %1
 
 after_failure:
   - tail -n 2000 build.log
+
+after_success:
+  - |
+    if [[ "${TRAVIS_TAG:-}" != "" ]]; then
+      sudo pip3 install twine;
+      twine upload --skip-existing dist/*;
+    fi
