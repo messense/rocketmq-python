@@ -8,7 +8,7 @@ matrix:
       services:
         - docker
       script:
-        - while sleep 5m; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
+        - while sleep 300; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
         - docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 /io/manylinux.sh >> build.log 2>&1
         - ls dist/
         - kill %1
@@ -17,7 +17,7 @@ matrix:
       compiler: clang
       script:
         - git clone --depth=1 https://github.com/apache/rocketmq-client-cpp.git /tmp/rocketmq-client-cpp
-        - while sleep 5m; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
+        - while sleep 300; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
         - cd /tmp/rocketmq-client-cpp && bash build.sh >> build.log 2>&1 && cd -
         - cp /tmp/rocketmq-client-cpp/bin/librocketmq.dylib rocketmq/
         - python3.6 setup.py bdist_wheel
