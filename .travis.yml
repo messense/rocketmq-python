@@ -7,6 +7,7 @@ matrix:
       compiler: clang
       script:
         - git clone --depth=1 https://github.com/apache/rocketmq-client-cpp.git /tmp/rocketmq-client-cpp
-        - cd /tmp/rocketmq-client-cpp && travis_wait 'bash build.sh > build.stdout.log 2> build.stderr.log' && cd -
+        - cp build_cpp.sh /tmp/rocketmq-client-cpp
+        - cd /tmp/rocketmq-client-cpp && travis_wait bash build_cpp.sh && cd -
         - cp /tmp/rocketmq-client-cpp/bin/librocketmq.dylib rocketmq/
         - python3.6 setup.py bdist_wheel
