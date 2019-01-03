@@ -1,9 +1,9 @@
 sudo: required
-language: python
 
 matrix:
   include:
     - dist: trusty
+      language: python
       python: 3.6
       services:
         - docker
