@@ -1,0 +1,13 @@
+sudo: required
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.4
+      compiler: clang
+      script:
+        - brew install wget libtool automake autoconf
+        - git clone --depth=1 https://github.com/apache/rocketmq-client-cpp.git /tmp/rocketmq-client-cpp
+        - cd /tmp/rocketmq-client-cpp && bash build.sh && cd -
+        - cp /tmp/rocketmq-client-cpp/bin/librocketmq.dylib rocketmq/
+        - python3.6 setup.py bdist_wheel
