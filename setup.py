@@ -5,6 +5,7 @@ import sys
 import struct
 
 from setuptools import setup, find_packages
+from setuptools.command.install import install
 
 
 readme = 'README.md'
@@ -31,6 +32,14 @@ try:
 
 except ImportError:
     pass
+
+class InstallPlatlib(install):
+    def finalize_options(self):
+        install.finalize_options(self)
+        # force platlib
+        self.install_lib = self.install_platlib
+
+cmdclass['install'] = InstallPlatlib
 
 setup(
     name='rocketmq',
