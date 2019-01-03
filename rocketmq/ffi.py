@@ -11,7 +11,7 @@ _DYLIB_NAMES = {
     'linux': 'librocketmq.so',
 }
 CURR_DIR = os.path.abspath(os.path.dirname(__file__))
-DYLIB_PATH = os.path.join(CURR_DIR, _DYLIB_NAMES[sys.platform().lower()])
+DYLIB_PATH = os.path.join(CURR_DIR, _DYLIB_NAMES[sys.platform.lower()])
 dll = ctypes.cdll.LoadLibrary(DYLIB_PATH)
 
 
