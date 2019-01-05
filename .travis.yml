@@ -13,7 +13,8 @@ matrix:
         - ls dist/
         - pip install --force-reinstall dist/*.whl
         - pip install -Ur dev-requirements.txt
-        - pytest -v tests
+        - pytest --cov=rocketmq -v tests
+        - pip install codecov && codecov
     - os: osx
       osx_image: xcode9.3
       compiler: clang
@@ -27,7 +28,7 @@ matrix:
         - ls dist/
         - python3 -m pip install --force-reinstall dist/*.whl
         - python3 -m pip install -Ur dev-requirements.txt
-        # - python3 -m pytest -v tests  # Skip for now, tests hang on Travis
+        # - python3 -m pytest --cov=rocketmq -v tests  # Skip for now, tests hang on Travis
 
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
