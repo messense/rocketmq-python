@@ -11,9 +11,11 @@ matrix:
         - while sleep 300; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
         - docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 /io/manylinux.sh >> build.log 2>&1
         - ls dist/
-        - pip install --force-reinstall dist/*.whl
         - pip install -Ur dev-requirements.txt
-        - pytest -v tests
+        - PYTHON_PATH=. pytest --cov=rocketmq -v tests
+        - pip install codecov && codecov
+        # Try to install binary wheel
+        - pip install --force-reinstall dist/*.whl
     - dist: trusty
       language: python
       python: 3.6
@@ -23,9 +25,11 @@ matrix:
         - while sleep 300; do echo "=====[ $SECONDS seconds, still building... ]====="; done &
         - docker run --rm -it -v `pwd`:/io -w /io quay.io/pypa/manylinux1_x86_64 /io/manylinux.sh >> build.log 2>&1
         - ls dist/
-        - pip install --force-reinstall dist/*.whl
         - pip install -Ur dev-requirements.txt
-        - pytest -v tests
+        - PYTHON_PATH=. pytest --cov=rocketmq -v tests
+        - pip install codecov && codecov
+        # Try to install binary wheel
+        - pip install --force-reinstall dist/*.whl
         # Build source distribution
         - if [[ "${TRAVIS_TAG:-}" != "" ]]; then python setup.py sdist; fi
     - os: osx
@@ -39,9 +43,10 @@ matrix:
         - cp /tmp/rocketmq-client-cpp/bin/librocketmq.dylib rocketmq/
         - python3 setup.py bdist_wheel
         - ls dist/
+        # Try to install binary wheel
         - python3 -m pip install --force-reinstall dist/*.whl
-        - python3 -m pip install -Ur dev-requirements.txt
-        # - python3 -m pytest -v tests  # Skip for now, tests hang on Travis
+        # - python3 -m pip install -Ur dev-requirements.txt
+        # - python3 -m pytest --cov=rocketmq -v tests  # Skip for now, tests hang on Travis
 
 before_script:
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export JAVA_HOME=$(/usr/libexec/java_home); fi
