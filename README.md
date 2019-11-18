@@ -6,6 +6,8 @@
 
 RocketMQ Python client, based on [rocketmq-client-cpp](https://github.com/apache/rocketmq-client-cpp), supports Linux and macOS
 
+**This project is currently being upstreamed to [apache/rocketmq-client-python](https://github.com/apache/rocketmq-client-python/tree/ctypes)**
+
 ## Installation
 
 ```bash
