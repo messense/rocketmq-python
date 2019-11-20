@@ -224,6 +224,7 @@ class Producer(object):
         def _on_success(csendres):
             try:
                 if success_callback:
+                    csendres = csendres.contents
                     sendres = SendResult(
                         SendStatus(csendres.sendStatus),
                         csendres.msgId.decode('utf-8'),
@@ -299,7 +300,7 @@ class Producer(object):
         )
 
     def set_group(self, group_name):
-        ffi_check(dll.SetProducerGroupName(_to_bytes(group_name)))
+        ffi_check(dll.SetProducerGroupName(self._handle, _to_bytes(group_name)))
 
     def set_namesrv_addr(self, addr):
         ffi_check(dll.SetProducerNameServerAddress(self._handle, _to_bytes(addr)))
@@ -361,7 +362,7 @@ class PushConsumer(object):
         ffi_check(dll.ShutdownPushConsumer(self._handle))
 
     def set_group(self, group_id):
-        ffi_check(dll.SetPushConsumerGroupID(_to_bytes(group_id)))
+        ffi_check(dll.SetPushConsumerGroupID(self._handle, _to_bytes(group_id)))
 
     def set_namesrv_addr(self, addr):
         ffi_check(dll.SetPushConsumerNameServerAddress(self._handle, _to_bytes(addr)))
@@ -445,7 +446,7 @@ class PullConsumer(object):
         ffi_check(dll.ShutdownPullConsumer(self._handle))
 
     def set_group(self, group_id):
-        ffi_check(dll.SetPullConsumerGroupID(_to_bytes(group_id)))
+        ffi_check(dll.SetPullConsumerGroupID(self._handle, _to_bytes(group_id)))
 
     def set_namesrv_addr(self, addr):
         ffi_check(dll.SetPullConsumerNameServerAddress(self._handle, _to_bytes(addr)))
