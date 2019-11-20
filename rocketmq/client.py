@@ -181,6 +181,7 @@ class Producer(object):
 
     def __del__(self):
         if self._handle is not None:
+            self.shutdown()
             ffi_check(dll.DestroyProducer(self._handle))
 
     def __enter__(self):
@@ -341,6 +342,7 @@ class PushConsumer(object):
 
     def __del__(self):
         if self._handle is not None:
+            self.shutdown()
             ffi_check(dll.DestroyPushConsumer(self._handle))
 
     def __enter__(self):
@@ -427,6 +429,7 @@ class PullConsumer(object):
 
     def __del__(self):
         if self._handle is not None:
+            self.shutdown()
             ffi_check(dll.DestroyPullConsumer(self._handle))
 
     def __enter__(self):
