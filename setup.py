@@ -43,7 +43,7 @@ cmdclass['install'] = InstallPlatlib
 
 setup(
     name='rocketmq',
-    version='0.4.3',
+    version='0.4.4',
     author='messense',
     author_email='messense@icloud.com',
     packages=find_packages(exclude=('tests', 'tests.*')),
