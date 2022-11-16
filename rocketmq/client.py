@@ -463,7 +463,7 @@ class PullConsumer(object):
         ))
 
     def _get_mq_key(self, mq):
-        key = '%s@%s' % (mq.topic, mq.queueId)
+        key = '%s@%s%s' % (mq.topic, mq.queueId, mq.brokerName)
         return key
 
     def get_message_queue_offset(self, mq):
